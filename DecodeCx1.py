@@ -156,9 +156,9 @@ for  t in range(2):
             call_insight_url(base_url+end_points3[i])
 
 
-    print(f'Test no. {t} started.........')
+    print(f'Test no. {t+1} started.........')
     calling_urls()
-    print(f'Test no. {t} done')
+    print(f'Test no. {t+1} done')
     print()
 
 
