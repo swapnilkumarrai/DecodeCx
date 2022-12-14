@@ -156,7 +156,7 @@ for  t in range(2):
             call_insight_url(base_url+end_points3[i])
 
 
-    print(f'Test no. {t} started')
+    print(f'Test no. {t} started.........')
     calling_urls()
     print(f'Test no. {t} done')
     print()
@@ -168,7 +168,7 @@ def comp_response():
     global tester_details
 
     r=json.loads(r.decode('utf-8'))
-    print('response: ',r)
+    print('Insights: ',r)
     print()
     print('Tester_details: ', tester_details)
     print()
