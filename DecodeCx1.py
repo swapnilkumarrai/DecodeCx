@@ -149,6 +149,13 @@ def calling_methods():
             b=0   
 
 
+<<<<<<< HEAD
+=======
+    for i in range(6):
+        call_insight_url(base_url+end_points3[i])
+
+#Using the for loop to perform the test for n no. of testers
+>>>>>>> 53e1a91ccb974336d3309bc05e1a79e338a3a760
 for  t in range(2):
 
     block_id='99d22693-ed4f-4474-b42a-ffa89a519b49'
