@@ -6,7 +6,7 @@ from string import Template
 
 
 tester_details=[]
-number_of_blocks=9  # No. of callings for all blocks
+number_of_blocks=9  # No. of blocks
 number_of_testers=2  # No. of testers giving test
 number_of_block_insights=8  # No. of block_insights
 insights=''  # To store the block_insights response
