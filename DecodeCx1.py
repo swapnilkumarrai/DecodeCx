@@ -69,16 +69,19 @@ def generate_block_options(url):
 
     if(bt =="SHORT_ANSWER" or bt=="PARAGRAPH"):
         option_ids=['Survey was good', 'product was good', 'survey was decent', 'product is not that good']
-        block_id_list.append(block_id)
+        if(t==1):
+            block_id_list.append(block_id)
     elif(bt =="LIKE_DISLIKE" or bt=="LINEAR_SCALE" or bt=="SMILEY_RATING" or bt=="STAR_RATING" ):
         option_ids=c['data']['block']['block_properties']['scale']
-        block_id_list.append(block_id)
+        if(t==1):
+            block_id_list.append(block_id)
     elif(bt=="CHECKBOX" or bt=="MCQ_BLOCK" or bt=="DROPDOWN"):
         l=len(c['data']['block']['block_properties']['options'])
         for i in range(l):
             option_ids.append(c['data']['block']['block_properties']['options'][i]['option_id'])
         
-        block_id_list.append(block_id)
+        if(t==1):
+            block_id_list.append(block_id)
     else: #(For thankyou page)
         block_id="14d2b236-2727-46b6-b7d2-bfc5029109d2"
         option_ids=[]
