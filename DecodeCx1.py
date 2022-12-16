@@ -5,8 +5,9 @@ import sys
 from string import Template
 
 
+block_id_list=[]
 tester_details=[]
-number_of_blocks=9  # No. of callings for all blocks
+number_of_blocks=9  # No. of blocks
 number_of_testers=2  # No. of testers giving test
 number_of_block_insights=8  # No. of block_insights
 insights=''  # To store the block_insights response
@@ -69,16 +70,19 @@ def generate_block_options(url):
 
     if(bt =="SHORT_ANSWER" or bt=="PARAGRAPH"):
         option_ids=['Survey was good', 'product was good', 'survey was decent', 'product is not that good']
-        block_id_list.append(block_id)
+        if(t==0):
+            block_id_list.append(block_id)
     elif(bt =="LIKE_DISLIKE" or bt=="LINEAR_SCALE" or bt=="SMILEY_RATING" or bt=="STAR_RATING" ):
         option_ids=c['data']['block']['block_properties']['scale']
-        block_id_list.append(block_id)
+        if(t==0):
+            block_id_list.append(block_id)
     elif(bt=="CHECKBOX" or bt=="MCQ_BLOCK" or bt=="DROPDOWN"):
         l=len(c['data']['block']['block_properties']['options'])
         for i in range(l):
             option_ids.append(c['data']['block']['block_properties']['options'][i]['option_id'])
-        
-        block_id_list.append(block_id)
+
+        if(t==0):
+            block_id_list.append(block_id)
     else: #(For thankyou page)
         block_id="14d2b236-2727-46b6-b7d2-bfc5029109d2"
         option_ids=[]
@@ -140,7 +144,6 @@ if __name__=='__main__':
 
     for  t in range(number_of_testers):
         block_id='99d22693-ed4f-4474-b42a-ffa89a519b49'
-        block_id_list=[]
         option_ids=[]
         tester=''
         print(f'Test no. {t+1} started.........')
