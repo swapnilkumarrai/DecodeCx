@@ -5,8 +5,8 @@ import sys
 from string import Template
 
 
-block_id_list=[]
 tester_details=[]
+block_id_list=[]
 number_of_blocks=9  # No. of blocks
 number_of_testers=2  # No. of testers giving test
 number_of_block_insights=8  # No. of block_insights
@@ -80,22 +80,24 @@ def generate_block_options(url):
         l=len(c['data']['block']['block_properties']['options'])
         for i in range(l):
             option_ids.append(c['data']['block']['block_properties']['options'][i]['option_id'])
-
+        
         if(t==0):
             block_id_list.append(block_id)
     else: #(For thankyou page)
         block_id="14d2b236-2727-46b6-b7d2-bfc5029109d2"
         option_ids=[]
+        block_id_list.append(block_id)
 
 
 def pass_response(url):
     #Calling tester_url by passing block_id and option_id as response using post method
-
+    global block_index
+    block_index=block_index+1
     if(len(option_ids)>0):
         r=random.randint(0, len(option_ids)-1)
-        request_json={"block_id":block_id,"study_id":study_id,"tester_id":tester,"response":[option_ids[r]]}
+        request_json={"block_id":block_id_list[block_index],"study_id":study_id,"tester_id":tester,"response":[option_ids[r]]}
     else:
-        request_json={"block_id":block_id,"study_id":study_id,"tester_id":tester,"response":option_ids}
+        request_json={"block_id":block_id_list[block_index],"study_id":study_id,"tester_id":tester,"response":option_ids}
 
     jsondata=json.dumps(request_json)
     response=requests.post(url, headers=headers1, data=jsondata)
@@ -108,7 +110,7 @@ def call_insight_url(url):
     global insights
     
     for i in range(number_of_block_insights):
-        request_json={"study_id":study_id,"block_id":block_id_list[i],"tester_ids":[]}
+        request_json={"study_id":study_id,"block_id":block_id_list[i+1],"tester_ids":[]}
         jsondata=json.dumps(request_json)
         response=requests.post(url, headers=headers1, data=jsondata)
         assert response.status_code==200, 'Error'
@@ -133,7 +135,7 @@ def calling_methods():
     generate_testers(base_url+tester_url)
 
     for _ in range(number_of_blocks):
-        get_resp_url=get_resp_url_2.substitute(study_id=study_id, block_id=block_id, tester=tester)
+        get_resp_url=get_resp_url_2.substitute(study_id=study_id, block_id=block_id_list[block_index], tester=tester)
         generate_block_options(base_url+get_resp_url)
         pass_response(base_url+post_resp_url) 
 
@@ -143,7 +145,10 @@ if __name__=='__main__':
     headers1=generate_headers()
 
     for  t in range(number_of_testers):
-        block_id='99d22693-ed4f-4474-b42a-ffa89a519b49'
+        block_index=0
+        if(t==0):
+            block_id_list.append('99d22693-ed4f-4474-b42a-ffa89a519b49')
+
         option_ids=[]
         tester=''
         print(f'Test no. {t+1} started.........')
